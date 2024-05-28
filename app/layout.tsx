@@ -2,6 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { ThemeProvider } from '@/components/providers/theme-provider';
+import { cn } from '@/lib/utils';
 
 const font = Open_Sans({ subsets: ['latin'] });
 
@@ -13,15 +15,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={font.className}>
-          {/* <SignedOut>
+      <html lang="en" suppressHydrationWarning>
+        <body className={cn(font.className, 'bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-200 antialiased')}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="discord-theme" disableTransitionOnChange>
+            {/* <SignedOut>
             <SignInButton />
-          </SignedOut>
-          <SignedIn>
+            </SignedOut>
+            <SignedIn>
             <UserButton />
           </SignedIn> */}
-          {children}
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
