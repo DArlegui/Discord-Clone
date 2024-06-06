@@ -1,3 +1,4 @@
+import InitialModel from '@/components/modals/initial-modal';
 import { db } from '@/lib/db';
 import { initialProfile } from '@/lib/inital-profile';
 import { RedirectToSignIn } from '@clerk/nextjs';
@@ -22,7 +23,7 @@ const SetupPage = async () => {
 
   if (server) return redirect(`/servers/${server.id}`);
 
-  return <div>Create a Server</div>;
+  return <InitialModel />;
 };
 
 export default SetupPage;
