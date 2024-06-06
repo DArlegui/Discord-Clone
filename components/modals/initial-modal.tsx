@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useState, useEffect } from 'react';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -32,6 +33,12 @@ const formSchema = z.object({
 });
 
 export const InitialModel = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,9 +53,11 @@ export const InitialModel = () => {
     console.log(values);
   };
 
+  if (!isMounted) return null;
+
   return (
     <Dialog open>
-      <DialogContent className="bg-white text-black px-2 overflow-hidden rounded-xl sm:min-w-[20rem] max-w-[48rem]">
+      <DialogContent className="bg-white text-black px-2 overflow-hidden rounded-xl w-[20rem] sm:w-[45rem]">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Customize your server
