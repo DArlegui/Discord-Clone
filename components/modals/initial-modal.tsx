@@ -1,10 +1,15 @@
 'use client';
 
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 //Design Components
+import { FileUpload } from '@/components/file-upload';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
 import {
   Dialog,
   DialogContent,
@@ -21,9 +26,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { useState, useEffect } from 'react';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -73,7 +75,21 @@ export const InitialModel = () => {
             className="space-y-8 rounded-2xl">
             <div className="space-y-8 px-8">
               <div className="flex flex-col items-center justify-center text-center">
-                TODO: Image Upload
+                <FormField
+                  control={form.control}
+                  name="imageUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload
+                          endpoint="serverImage"
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
               <FormField
                 control={form.control}
@@ -95,7 +111,7 @@ export const InitialModel = () => {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="imageUrl"
                 render={({ field }) => (
@@ -114,7 +130,7 @@ export const InitialModel = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
             <DialogFooter className="items-center px-6 pb-6">
               <Button
