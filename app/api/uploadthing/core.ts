@@ -1,6 +1,7 @@
-// https://docs.uploadthing.com/getting-started/appdir
+//https://docs.uploadthing.com/getting-started/appdir
+//app\api\uploadthing\core.ts
 
-import { auth } from '@clerk/nextjs/dist/types/server';
+import { auth } from '@clerk/nextjs/server';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UploadThingError } from 'uploadthing/server';
 
