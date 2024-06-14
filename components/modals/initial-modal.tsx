@@ -59,7 +59,7 @@ export const InitialModel = () => {
 
   return (
     <Dialog open>
-      <DialogContent className="bg-white text-black px-2 overflow-hidden rounded-xl w-[20rem] sm:w-[45rem]">
+      <DialogContent className="bg-white text-black px-2 overflow-hidden rounded-xl w-[25rem] sm:w-[45rem]">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Customize your server
