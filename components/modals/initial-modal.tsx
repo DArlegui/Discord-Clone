@@ -138,7 +138,7 @@ export const InitialModel = () => {
                 type="submit"
                 disabled={isLoading}
                 className="w-24">
-                {isLoading ? 'Submitting...' : 'Submit'}
+                {isLoading ? 'Creating...' : 'Create'}
               </Button>
             </DialogFooter>
           </form>
