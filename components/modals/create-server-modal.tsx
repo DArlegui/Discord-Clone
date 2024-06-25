@@ -1,9 +1,9 @@
 'use client';
 
+import { useModal } from '@/hooks/use-modal-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -33,17 +33,14 @@ const formSchema = z.object({
   name: z.string().min(1, {
     message: 'Server name is required',
   }),
-  imageUrl: z.string().optional(), // Make imageUrl optional
+  imageUrl: z.string().optional(), // Optional imageUrl
 });
 
-export const InitialModel = () => {
-  const [isMounted, setIsMounted] = useState(false);
-
+export const CreateServerModal = () => {
+  const { isOpen, onClose, type } = useModal();
   const router = useRouter();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isModalOpen = isOpen && type === 'createServer';
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -57,19 +54,23 @@ export const InitialModel = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      console.log('Submitting values:', values);
       await axios.post('/api/servers', values);
       form.reset();
       router.refresh();
-      window.location.reload();
+      onClose();
     } catch (error) {
-      console.log(error);
+      console.log('Submission error:', error);
     }
   };
 
-  if (!isMounted) return null;
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
 
   return (
-    <Dialog open>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black px-2 overflow-hidden rounded-xl w-[25rem] sm:w-[45rem]">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
@@ -122,26 +123,6 @@ export const InitialModel = () => {
                   </FormItem>
                 )}
               />
-              {/* <FormField
-                control={form.control}
-                name="imageUrl"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="uppercase text-sm font-bold text-zinc-500 dark:text-secondary/70">
-                      Server Image URL
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isLoading}
-                        placeholder="Enter image URL (optional)"
-                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
             </div>
             <DialogFooter className="items-center px-6 pb-6">
               <Button
@@ -158,5 +139,3 @@ export const InitialModel = () => {
     </Dialog>
   );
 };
-
-export default InitialModel;

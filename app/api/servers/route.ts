@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server';
 import { MemberRole } from '@prisma/client';
 
 export async function POST(req: Request, res: Response) {
+  console.log('Creating a server');
   try {
     const { name, imageUrl } = await req.json();
     const profile = await currentProfile();
