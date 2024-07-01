@@ -40,23 +40,13 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
     return redirect('/');
   }
 
-  const textChannels = server?.Channel.filter(
-    (channel) => channel.type === ChannelType.TEXT
-  );
-  const audioChannels = server?.Channel.filter(
-    (channel) => channel.type === ChannelType.AUDIO
-  );
-  const videoChannel = server?.Channel.filter(
-    (channel) => channel.type === ChannelType.VOICE
-  );
+  const textChannels = server?.Channel.filter((channel) => channel.type === ChannelType.TEXT);
+  const audioChannels = server?.Channel.filter((channel) => channel.type === ChannelType.AUDIO);
+  const videoChannel = server?.Channel.filter((channel) => channel.type === ChannelType.VOICE);
 
-  const members = server?.Member.filter(
-    (member) => member.profileId !== profile.id
-  );
+  const members = server?.Member.filter((member) => member.profileId !== profile.id);
 
-  const role = server.Member.find(
-    (member) => member.profileId === profile.id
-  )?.role;
+  const role = server.Member.find((member) => member.profileId === profile.id)?.role;
 
   return (
     <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">
